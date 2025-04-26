@@ -2,33 +2,33 @@ const fs = require('fs');
 const path = require('path');
 const { program } = require('commander');
 
-let testDirPath;
+let dirPath;
 
 program
     .version('0.0.1')
     .description('simple bulk renamer')
 
 
-    program
+program
     .command('path <dirpath>')
     .action((dirpath) => {
         if (dirpath) {
-            testDirPath = dirpath;
+            dirPath = dirpath;
         }
-    });
+});
 
 program.parse(process.argv);
 
 
-const files = fs.readdirSync(testDirPath);
+const files = fs.readdirSync(dirPath);
 
 let count = 0;
 
 files.forEach(file => {
     if (path.extname(file)) {
         count++;
-        const oldPath = path.join(testDirPath, file);
-        const newPath = path.join(testDirPath, `testFileName${count}${path.extname(file)}`);
+        const oldPath = path.join(dirPath, file);
+        const newPath = path.join(dirPath, `testFile${count}${path.extname(file)}`);
         
         fs.renameSync(oldPath, newPath);
     }
